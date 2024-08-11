@@ -18,7 +18,7 @@
     
     function onSelectChanged(e){
         let param = e.target.parentNode.querySelector("#paramheader").innerText //im too good for svelte i prefer my html thank you very much (sarcasm)
-       
+        
         if (e.target.value == "") {
             delete url_params[displayNamesToUrlNames(param)]
             console.log(url_params)
@@ -76,14 +76,15 @@
         console.log("SEARCHING!")
         Object.keys(url_params).forEach(key => {
             if (url_params[key]){
-                final_url_params[key] = "[" + turnPropNameIntoId(url_params[key], key) + "]" //im so great at this
+                final_url_params[key] = "[" + turnPropNameIntoId(url_params[key], key) + "]" //im so great at this  || 6 months later -> what abomination is this what the actual frick
             }
             
         })
         final_url_params['limit'] = 80
+        final_url_params['query'] = searchinput
         final_url_params['id'] = localStorage.getItem("api_key")
         loading = true
-        let req = await axios.get(API_URL+'/get_random_question', {params: final_url_params})
+        let req = await axios.get(API_URL+'/search', {params: final_url_params})
         loading = false
         let data = req.data
         cards = [...data]
@@ -158,7 +159,7 @@
         {:else}
             {#each cards as card}
                 <div id="searchresult">
-                    <p>{card['properties']['question']}</p>
+                    <p>{card['properties']['text']}</p>
                     <h3>{card['properties']['answer']}</h3>
                     <!-- <p>{card["extra"]["subcategory_id"]}</p> -->
                     
