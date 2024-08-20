@@ -3,7 +3,7 @@
 
     // @ts-nocheck
         import axios from "axios"
-        let API_URL = API_URL
+        // let API_URL = API_URL
         
         async function deleteCards() {
             console.log("deleting cards")
