@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import axios from "axios"
 
-export const API_URL = "http://127.0.0.1:5004"
+export const API_URL = window.location.hostname + ":5004"
 type StringBool = "true" | "false"
 
 
