@@ -5,6 +5,7 @@
   import Question from "../../components/Question.svelte";
   import InfoButton from "../../components/InfoButton.svelte";
   import { requestServer } from "../../lib/backend";
+  import checkAnswer from "$lib/check-answer";
   let activeText = "";
   let paused = false;
   let inbetween = false;
@@ -112,7 +113,7 @@
 
   function gradeQuestion() {
     // temp grading policy until i can get LLMs trained to do this for me
-    console.log("waiting for grading");
+  
 
     if (inbetween || !buzzed) {
       return;
@@ -121,6 +122,16 @@
     waitingForInput = true;
     temp_answer = questions[0].properties.answer;
     buzzed = false;
+
+    let correctness = checkAnswer(questions[0].properties.answer, buzz_text)
+    if (correctness.directive == "accept") {
+      setQuestionCorrectness(true)
+    } else if (correctness.directive == "prompt") {
+      promptUser()
+    } else {
+      setQuestionCorrectness(false)
+    }
+
     // buzz_text = "";
 
     // inbetween = true
@@ -265,17 +276,17 @@
           getNewQuestion();
         }
       }
-      if (waitingForInput) {
-        // more temp grading policy
-        if (event.key.toLocaleLowerCase() == "c") {
-          // correct
-          setQuestionCorrectness(true);
-        } else if (event.key.toLocaleLowerCase() == "i") {
-          setQuestionCorrectness(false);
-        } else if (event.key.toLocaleLowerCase() == "p") {
-          promptUser()
-        }
-      }
+      // if (waitingForInput) {
+      //   // more temp grading policy
+      //   if (event.key.toLocaleLowerCase() == "c") {
+      //     // correct
+      //     setQuestionCorrectness(true);
+      //   } else if (event.key.toLocaleLowerCase() == "i") {
+      //     setQuestionCorrectness(false);
+      //   } else if (event.key.toLocaleLowerCase() == "p") {
+      //     promptUser()
+      //   }
+      // }
     });
     window.addEventListener("unload" , () => {
       localStorage.setItem("reading_speed", cps.toString())

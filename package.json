@@ -29,6 +29,10 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"axios": "^1.6.2"
+		"axios": "^1.6.2",
+		"damerau-levenshtein-js": "^1.1.8",
+		"number-to-words": "^1.2.4",
+		"roman-numerals": "^0.3.2",
+		"stemmer": "^2.0.1"
 	}
 }
