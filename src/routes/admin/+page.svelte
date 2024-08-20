@@ -1,7 +1,9 @@
 <script lang="ts">
+  import { API_URL } from "$lib/backend";
+
     // @ts-nocheck
         import axios from "axios"
-        let API_URL = "http://127.0.0.1:5004"
+        let API_URL = API_URL
         
         async function deleteCards() {
             console.log("deleting cards")

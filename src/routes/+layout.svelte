@@ -3,6 +3,7 @@
     import { onMount } from "svelte";
     import axios from "axios";
     import {API_URL} from "../lib/backend"
+    
     let message = ""
     onMount(async () => {
         //@ts-ignore
@@ -21,7 +22,7 @@
                 e.preventDefault();
             }
         });
-        //@ts-ignore
+       
         
     })
 

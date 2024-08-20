@@ -70,4 +70,7 @@
     #infobutton:hover p {
         visibility: visible;
     }
+    #infobutton:focus p {
+        visibility: visible;
+    }
 </style>

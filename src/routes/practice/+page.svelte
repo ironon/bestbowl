@@ -226,7 +226,26 @@
     // { answer: "david", question: "who is the coolest person?" },
     // { question: "what chocolate is better?", answer: "dark chocolate." },
   ];
+  let mobilePos = 0; //only used on mobile
   onMount(() => {
+    let touchstartX = 0
+    let touchendX = 0
+        
+    function checkDirection() {
+        if (touchendX < touchstartX && Math.abs(touchendX - touchstartX) > 100) mobilePos = Math.min(2, mobilePos + 1)
+        if (touchendX > touchstartX && Math.abs(touchendX - touchstartX) > 100) mobilePos = Math.max(-2, mobilePos - 1)
+        
+    }
+
+    document.addEventListener('touchstart', e => {
+        touchstartX = e.changedTouches[0].screenX
+    })
+
+    document.addEventListener('touchend', e => {
+        touchendX = e.changedTouches[0].screenX
+        checkDirection()
+      })
+      
     window.addEventListener("keydown", (event) => {
       // console.log(event.key)
       if (event.key == " ") {
@@ -287,12 +306,10 @@
 </script>
 
 <div id="practice">
-  <div id="tempanswer">
-    {temp_answer}
-  </div>
-  <div id="leftest"></div>
-  <div id="left"></div>
-  <div id="center">
+ 
+  <div id="leftest" style={mobilePos == -2 ? "display: flex;" : ""}></div>
+  <div id="left" style={mobilePos == -1 ? "display: flex;" : ""}></div>
+  <div id="center" style={mobilePos == 0 ? "display: grid;" : ""}>
     <div id="controlbar">
       <button id="pause" title="P to Pause" on:click={() => (paused = !paused)}
         >{paused ? "▶" : "⏸"}</button
@@ -331,9 +348,12 @@
           correct={q.correct}
         ></Question>
       {/each}
+      <div id="tempanswer">
+        {temp_answer}
+      </div>
     </div>
   </div>
-  <div id="right">
+  <div id="right" style={mobilePos == 1 ? "display: flex;" : ""}>
     <h2>Settings</h2>
     <div id="settings">
       <div id="same-line">
@@ -380,7 +400,7 @@
       </div>
     </div>
   </div>
-  <div id="rightmost">
+  <div id="rightmost" style={mobilePos == 2 ? "display: flex;" : ""}>
     <div style="display: flex; flex-direction: row;">
       <h2>SRS</h2>
 
@@ -429,11 +449,15 @@
   }
   #tempanswer {
     display: flex;
-    position: absolute;
-    top: 0;
-    right: 0;
-    max-height: 6rem;
-    width: 10rem;
+    position:sticky; 
+    min-height: 4rem;
+    max-height: 12rem;
+    bottom: 0;
+    left: 0;
+    background-color: gray;
+    border: 3px solid black;
+    color: black;
+    width: 100%;
   }
   #oldbal {
     /* margin-top: 1rem; */
@@ -528,7 +552,10 @@
     border-radius: 5px;
     border: 2px solid gray;
     height: 95%;
+    flex-direction: column;
   }
+
+
   #center {
     width: 30%;
     display: grid;
@@ -653,4 +680,15 @@
     /* padding-top: 1rem; */
     overflow-y: scroll;
   }
+  @media only screen and (max-width: 1200px) {
+    #practice > * {
+      display: none;
+      width: 90%;
+    }
+    #center {
+      height: 90%;
+      margin-top: 20%;
+    }
+  }
+ 
 </style>
