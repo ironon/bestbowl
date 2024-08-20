@@ -314,6 +314,9 @@
     }
     return num.toString();
   }
+  function preventFocus(e) {
+    e.preventDefault();
+  }
 </script>
 
 <div id="practice">
@@ -328,6 +331,8 @@
       <button id="buzz" title="Space to Buzz" on:click={buzz}>Buzz</button>
       <button
         id="next"
+        tabindex="-1"
+        on:focus={preventFocus}
         style={!inbetween ? "background-color:aqua" : ""}
         on:click={getNewQuestion}>{inbetween ? "Next" : "Skip"}</button
       >
@@ -359,9 +364,7 @@
           correct={q.correct}
         ></Question>
       {/each}
-      <div id="tempanswer">
-        {temp_answer}
-      </div>
+   
     </div>
   </div>
   <div id="right" style={mobilePos == 1 ? "display: flex;" : ""}>
@@ -603,6 +606,7 @@
     padding: 0.5rem;
     background-color: rgb(195, 224, 147);
     color: black;
+    
   }
   #buzz {
     grid-row: 1;
