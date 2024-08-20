@@ -2,14 +2,13 @@
 import { readFileSync } from 'fs';
 import { resolve as pathResolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import csv from "./typos.txt"
 
+console.log(csv)
 function loadCorrectionsAsDict() {
-    const corrections = {};
-    const __dirname = dirname(fileURLToPath(import.meta.url));
-    const typosPath = pathResolve(__dirname, 'typos.csv');
-    const content = readFileSync(typosPath, 'utf8');
-
-    content.split('\n').forEach(line => {
+   
+    let corrections = {}
+    csv.split('\n').forEach(line => {
         const [misspelling, ...correction] = line.split(',');
         corrections[misspelling] = correction.join(',');
     });
