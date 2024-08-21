@@ -97,6 +97,8 @@
       activeText = question_to_repeat.question.properties.text;
     }
     questions = questions.slice(0, Math.min(30, questions.length));
+
+    document.getElementById("practice")?.focus()
   }
   function startBuzzTimer() {
     setTimeout(getTick, 100);
@@ -333,8 +335,15 @@
         id="next"
         tabindex="-1"
         on:focus={preventFocus}
-        style={!inbetween ? "background-color:aqua" : ""}
-        on:click={getNewQuestion}>{inbetween ? "Next" : "Skip"}</button
+        style={!inbetween ? "display: none;" : ""}
+        on:click={getNewQuestion}>{"Next"}</button
+      >
+      <button
+        id="skip"
+        tabindex="-1"
+        on:focus={preventFocus}
+        style={!inbetween ? "" : "display:none;"}
+        on:click={getNewQuestion}>{"Skip"}</button
       >
       <div id="buzzcontainer" style={!buzzed ? "visibility: hidden;" : ""}>
         <input type="text" autofocus bind:value={buzz_text} style={prompted ? "background-color: #eced8e" : ""} id="buzzinput" />
