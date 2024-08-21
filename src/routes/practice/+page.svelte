@@ -617,6 +617,17 @@
     color: black;
     
   }
+  #skip {
+    grid-row: 1;
+    grid-column: 3;
+    height: 3rem;
+    width: 4rem;
+    margin-left: 1rem;
+    padding: 0.5rem;
+    background-color: rgb(145, 231, 220);
+    color: black;
+    
+  }
   #buzz {
     grid-row: 1;
     grid-column: 2;
